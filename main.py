@@ -1,16 +1,45 @@
-# This is a sample Python script.
+from tkinter import *
+from tkinter.ttk import *
+import datetime
+from time import strftime
+import winsound
+import pytz
+from threading import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# checks time and updates lbl every second
+def time():
+    time_str = strftime("%H:%M:%S %p")
+    lbl.config(text = time_str)
+    lbl.after(1000, time)
+
+root = Tk()
+
+# Set geometry
+root.geometry("400x200")
+# setting title
+root.title("Set your Alarm Clock!")
+# adding a label to the root window
+lbl = Label(root, font = ('calibri', 12))
+
+# position of clock at upper-right corner
+lbl.pack(anchor = 'ne')
+time()
+mainloop()
+def clicked():
+    lbl.configure(text="I just got clicked")
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+# Execute Tkinter
+root.mainloop()
+
+def dt_threading():
+    t1 = Thread(target=alarm)
+    t1.start()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def alarm():
+    pass
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+root.mainloop()
