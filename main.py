@@ -1,61 +1,65 @@
 from tkinter import *
 from tkinter.ttk import *
 import datetime
-from time import strftime
+from time import *
 import winsound
 import pytz
 from threading import *
 # Create Object
-root = Tk()
+
+clock = Tk()
 
 # checks time and updates lbl every second
 def time():
     time_str = strftime("%H:%M:%S %p")
-    lbl.config(text = time_str)
+    lbl.config(text=time_str)
     lbl.after(1000, time)
 
 # Set geometry
-root.geometry("400x200")
+clock.geometry("400x200")
 # setting title
-root.title("Set your Alarm Clock!")
+clock.title("Set your Alarm Clock!")
 # adding a label to the root window
-lbl = Label(root, font = ('calibri', 12), borderwidth = 1, relief = "ridge")
+lbl = Label(clock, font = ('calibri', 12), borderwidth = 1, relief = "ridge")
 # position of clock at upper-right corner
-lbl.pack(anchor = 'ne')
+lbl.pack(anchor='ne')
 time()
-frame = Frame(root)
-frame.pack()
 
-hour = StringVar(root)
-hours = ('HR', '00', '01', '02', '03', '04', '05', '06', '07',
-         '08', '09', '10', '11', '12', '13', '14', '15',
-         '16', '17', '18', '19', '20', '21', '22', '23', '24'
-         )
-hour.set(hours[0])
+def alarm(set_alarm_timer):
+    while True:
+        sleep(1)
+        current_time = datetime.datetime.now()
+        now = current_time.strftime("%H:%M:%S")
+        date = current_time.strftime("%d/%m/%Y")
+        print("The Set Date is:",date)
+        print(now)
+        if now == set_alarm_timer:
+            print("Time to Wake up")
+            winsound.PlaySound("sound.wav",winsound.SND_ASYNC)
+            break
 
-hrs = OptionMenu(frame, hour, *hours)
-hrs.pack(side=LEFT)
+def actual_time():
+    set_alarm_timer = f"{hour.get()}:{min.get()}:{sec.get()}"
+    alarm(set_alarm_timer)
 
-minute = StringVar(root)
-minutes = ('MIN', '00', '01', '02', '03', '04', '05', '06', '07',
-           '08', '09', '10', '11', '12', '13', '14', '15',
-           '16', '17', '18', '19', '20', '21', '22', '23',
-           '24', '25', '26', '27', '28', '29', '30', '31',
-           '32', '33', '34', '35', '36', '37', '38', '39',
-           '40', '41', '42', '43', '44', '45', '46', '47',
-           '48', '49', '50', '51', '52', '53', '54', '55',
-           '56', '57', '58', '59', '60')
-minute.set(minutes[0])
+clock.title("DataFlair Alarm Clock")
+clock.geometry("400x200")
+time_format=Label(clock, text= "Enter time in 24 hour format!", foreground="red",background="black",font="Arial").place(x=60,y=120)
+addTime = Label(clock,text = "Hour  Min   Sec",font=60).place(x = 110)
+setYourAlarm = Label(clock,text = "When to wake you up",foreground="blue",relief = "solid",font=("Helevetica",7,"bold")).place(x=0, y=29)
 
-mins = OptionMenu(frame, minute, *minutes)
-mins.pack(side=LEFT)
+# The Variables we require to set the alarm(initialization):
+hour = StringVar()
+min = StringVar()
+sec = StringVar()
 
-am_pm = StringVar(root)
-am_pms = ('AM/PM', 'AM', 'PM')
-am_pm.set(am_pms[0])
+#Time required to set the alarm clock:
+hourTime= Entry(clock,textvariable = hour,background = "pink",width = 15).place(x=110,y=30)
+minTime= Entry(clock,textvariable = min,background = "pink",width = 15).place(x=150,y=30)
+secTime = Entry(clock,textvariable = sec,background = "pink",width = 15).place(x=200,y=30)
 
-aps = OptionMenu(frame, am_pm, *am_pms)
-aps.pack(side = LEFT)
+#To take the time input by user:
+submit = Button(clock,text = "Set Alarm",width = 10,command = actual_time).place(x =110,y=70)
 
 mainloop()
 
