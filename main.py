@@ -9,17 +9,11 @@ from threading import *
 # Create Object
 root = Tk()
 
-# Set geometry
-root.geometry("400x200")
-
-
 # checks time and updates lbl every second
 def time():
     time_str = strftime("%H:%M:%S %p")
     lbl.config(text = time_str)
     lbl.after(1000, time)
-
-root = Tk()
 
 # Set geometry
 root.geometry("400x200")
@@ -32,8 +26,8 @@ lbl = Label(root, font = ('calibri', 12))
 lbl.pack(anchor = 'ne')
 time()
 mainloop()
-def clicked():
-    lbl.configure(text="I just got clicked")
+
+
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
