@@ -16,7 +16,7 @@ def time():
     lbl.after(1000, time)
 
 # Set geometry
-clock.geometry("400x200")
+clock.geometry("700x400")
 # setting title
 clock.title("Set your Alarm Clock!")
 # adding a label to the root window
@@ -58,10 +58,12 @@ def check(e):
 
 
 def update(data):
-    pass
+    places.delete(0, END)
+    for value in data:
+        places.insert(END, value)
 
 time_format=Label(clock, text= "Enter time in 24 hour format!", foreground="red",background="black",font="Arial").place(x=90,y=150)
-addTime = Label(clock,text = "Hour   Min   Sec      GMT",font=60).place(x = 110, y = 30)
+addTime = Label(clock,text = "Hour   Min   Sec                      Timezone",font=60).place(x = 110, y = 30)
 setYourAlarm = Label(clock,text = "Time: ",foreground="blue",relief = "solid",font=("Helevetica", 10,"bold")).place(x=60, y=60)
 
 # List of timezones
@@ -83,11 +85,13 @@ minTime.place(x = 190, y = 70, anchor = CENTER)
 secTime = Entry(clock,textvariable = sec,width = 7)
 secTime.place(x = 240, y = 70, anchor = CENTER)
 
-timezone = Entry(clock,textvariable = gmt, width = 7)
-timezone.place(x = 308, y = 70, anchor = CENTER)
+timezone = Entry(clock,textvariable = gmt, width = 19)
+timezone.place(x = 428, y = 70, anchor = CENTER)
 timezone.bind("<KeyRelease>", check)
-places = Listbox(clock)
 
+places = Listbox(clock)
+places.place(x = 367, y = 80)
+update(tz_list)
 # To take the time input by user:
 submit = Button(clock,text = "Set Alarm",width = 10,command = actual_time).place(x =110,y=100)
 
